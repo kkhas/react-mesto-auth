@@ -26,7 +26,7 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
     const [selectedCard, setSelectedCard] = useState(null)
     const [cards, setCards] = useState([])
-    const {setupLoggedIn} = useContext(AuthContext)
+    const {isLoggedIn, setupLoggedIn} = useContext(AuthContext)
     const history = useHistory()
     const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false)
     const [isInfoTooltipSuccess, setIsInfoTooltipSuccess] = useState(false)
@@ -188,7 +188,7 @@ function App() {
                         <Login onLogin={handleLogin}/>
                     </Route>
 
-                    <ProtectedRoute exact path="/">
+                    <ProtectedRoute exact path="/" loggedIn={isLoggedIn}>
                         <Main 
                             onCardClick={handleCardClick} 
                             onEditProfile={handleEditProfileClick} 
