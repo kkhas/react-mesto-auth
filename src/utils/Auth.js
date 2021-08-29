@@ -1,7 +1,17 @@
-const BASE_URL = 'https://auth.nomoreparties.co';
+class Auth {
+  constructor(options) {
+    this._address = options.baseUrl;
+  }
 
-const register = (password, email) => {
-    return fetch(`${BASE_URL}/signup`, {
+  _handleResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
+  register(password, email) {
+    return fetch(`${this._address}/signup`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -12,72 +22,38 @@ const register = (password, email) => {
         "email": email
       })
     })
-    .then((response) => {
-      return response.json();
-    })
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => console.log(err));
-  };
-
-  const login = (password, email) => {
-    return fetch(`${BASE_URL}/signin`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "password": password,
-          "email": email
-        })
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((res) => {
-        if (res.token){
-            localStorage.setItem('jwt', res.token);
-            return res;
-          } 
-      })
-      .catch((err) => console.log(err));
+    .then(this._handleResponse)
   }
-
   
+  login(password, email) {
+    return fetch(`${this._address}/signin`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "password": password,
+        "email": email
+      })
+    })
+    .then(this._handleResponse)
+}
 
-  const authorization = () => {
-    return fetch(`${BASE_URL}/users/me`, {
+  authorization = (token) => {
+    return fetch(`${this._address}/users/me`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${localStorage.getItem('jwt')}`
+          "Authorization": `Bearer ${token}`
         }
       })
-      .then((response) => {
-        return response.json();
-      })
-      .then((res) => {
-          return res;
-    })
-      .catch((err) => console.log(err));
+      .then(this._handleResponse)
   }
+}
 
+const auth = new Auth({
+  baseUrl: 'https://auth.nomoreparties.co'
+});
 
-// Пример успешного ответа:
-// Скопировать код
-// JSON
-// {
-//     "_id":"1f525cf06e02630312f3fed7",
-//     "email":"email@email.ru"
-// } 
-// Коды ошибок:
-// Скопировать код
-// # Если токен не передан или передан без Bearer
-// 400 — Токен не передан или передан не в том формате
-
-// # Если передан некорректный токен
-// 401 — Переданный токен некорректен
-
-export { register, login, authorization }
+export default auth

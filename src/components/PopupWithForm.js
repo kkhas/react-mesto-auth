@@ -6,7 +6,7 @@ function PopupWithForm(props) {
     <section onSubmit={props.onSubmit} className={`popup popup_type_${props.name} ${props.isOpen ? 'popup_active' : ''}`}>
         <div className="popup__container">
             <h2 className="popup__heading">{props.heading}</h2>
-            <form className="popup__form popup__form_edit" name={props.name} method="post" noValidate>
+            <form className="popup__form popup__form_edit" name={props.name} method="post">
                 {props.children}
                 <input className="popup__button popup__save-button" type="submit" value={props.saveButtonValue}/>
             </form>

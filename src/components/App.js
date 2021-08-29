@@ -15,8 +15,7 @@ import Login from './Login';
 import Register from './Register';
 import ProtectedRoute from './ProtectedRoute';
 import {AuthContext} from '../contexts/AuthContext';
-import { authorization } from '../utils/Auth';
-import {register, login} from '../utils/Auth';
+import auth from '../utils/Auth';
 
 function App() {
     const [currentUser, setCurrentUser] = useState({})
@@ -32,28 +31,33 @@ function App() {
     const [isInfoTooltipSuccess, setIsInfoTooltipSuccess] = useState(false)
 
       useEffect( () => {
-        Promise.all([api.getUserInfo(), api.getInitialCards(), authorization()])
-        .then(([ userData, cards, userEmail ]) => { 
+        Promise.all([api.getUserInfo(), api.getInitialCards()])
+        .then(([ userData, cards ]) => { 
             setCurrentUser(userData)
-            setCards(cards)
-            setEmailData(userEmail.data.email)  
-            tokenCheck()   
+            setCards(cards)  
         })
         .catch((err) => {
             console.log(err);
           }); 
       }, [] )
 
+      useEffect( () => {
+        tokenCheck()
+      }, [] )
+
       function tokenCheck () {
         const token = localStorage.getItem('jwt')
 
         if (token){
-          authorization(token).then( (res) => {
+          auth.authorization(token)
+          .then( (res) => {
               if(res){
                 setupLoggedIn(true)
                 history.push('/')
+                setEmailData(res.data.email)
               }
-          });
+          })
+          .catch((err) => console.log(err))
         }
       } 
 
@@ -147,14 +151,14 @@ function App() {
     }
 
     function handleRegister({password, email}) {
-        register(password, email)
+        auth.register(password, email)
         .then(() => {
             history.push('/sign-in')
             setIsInfoTooltipSuccess(true)
         })
         .catch((err) => {
             setIsInfoTooltipSuccess(false);
-            // history.push('/sign-up')
+            history.push('/sign-up')
             console.log(err)
         })
         .finally(() => {
@@ -163,9 +167,11 @@ function App() {
     }
 
     function handleLogin({password, email}) {
-        login(password, email)
-        .then((data) => {
-            if (data.token){
+        auth.login(password, email)
+        .then((res) => {
+            if (res.token){
+                localStorage.setItem('jwt', res.token)
+                setEmailData(email)
                 setupLoggedIn(true)
                 history.push('/');
             }
@@ -198,26 +204,28 @@ function App() {
                             onCardLike={handleCardLike}
                             onCardDelete={handleCardDelete} />
 
-                        <EditProfilePopup 
-                            onUpdateUser={handleUpdateUser} 
-                            isOpen={isEditProfilePopupOpen} 
-                            onClose={closeAllPopups} />
-
-                        <AddPlacePopup 
-                            onAddPlace={handleAddPlace} 
-                            isOpen={isAddPlacePopupOpen} 
-                            onClose={closeAllPopups}/>
-
-                        <PopupWithForm name="confirm" heading="Вы уверены?" saveButtonValue="Сохранить" />
-
-                        <EditAvatarPopup 
-                            onUpdateAvatar={handleUpdateAvatar} 
-                            isOpen={isEditAvatarPopupOpen} 
-                            onClose={closeAllPopups} />
-
-                        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+                        
                     </ProtectedRoute>
                 </Switch>
+
+                <EditProfilePopup 
+                    onUpdateUser={handleUpdateUser} 
+                    isOpen={isEditProfilePopupOpen} 
+                    onClose={closeAllPopups} />
+
+                <AddPlacePopup 
+                    onAddPlace={handleAddPlace} 
+                    isOpen={isAddPlacePopupOpen} 
+                    onClose={closeAllPopups}/>
+
+                <PopupWithForm name="confirm" heading="Вы уверены?" saveButtonValue="Сохранить" />
+
+                <EditAvatarPopup 
+                    onUpdateAvatar={handleUpdateAvatar} 
+                    isOpen={isEditAvatarPopupOpen} 
+                    onClose={closeAllPopups} />
+
+                <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
                 <InfoTooltip 
                     isOpen={isInfoTooltipOpen}

@@ -1,8 +1,7 @@
 import React, { useState} from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Register(props) {
-  const history = useHistory();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,10 +27,10 @@ function Register(props) {
   return (
     <section className="register" >
         <h2 className="register__heading">Регистрация</h2>
-        <form className="register__form" onSubmit={handleSubmit} method="post" noValidate>
-          <input className="register__input register__input_value_email" onChange={handleEmailChange} placeholder="Email" type="text" name="email" id="email" minLength="2" maxLength="40" required/>
+        <form className="register__form" onSubmit={handleSubmit} method="post">
+          <input className="register__input register__input_value_email" value={email} onChange={handleEmailChange} placeholder="Email" type="text" name="email" id="email" minLength="2" maxLength="40" required/>
           <span className="register__error" id="email-error"></span>
-          <input className="register__input register__input_value_password" onChange={handlePasswordChange} placeholder="Пароль" type="password" name="password" id="password" minLength="2" maxLength="200" required/>
+          <input className="register__input register__input_value_password" value={password} onChange={handlePasswordChange} placeholder="Пароль" type="password" name="password" id="password" minLength="2" maxLength="200" required/>
           <span className="register__error" id="password-error"></span>
           <input className="register__button register__save-button" type="submit" value="Зарегистрироваться"/>
         </form>

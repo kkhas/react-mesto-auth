@@ -1,4 +1,4 @@
-class Api {
+export class Api {
     constructor(options) {
       this._address = options.baseUrl;
       this._token = options.headers.authorization;

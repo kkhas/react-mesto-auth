@@ -8,27 +8,23 @@ function Header(props) {
   return (
     <header className="header">
       <a className="header__link" target="_blank" href="#"><img className="header__logo" src={logo} alt="Логотип"/></a>
-
-      <Switch>
-        <Route exact path="/">
-          <div className="header__user">
-            <p className="header__user-email">{props.email}</p>
-            <Logout onSignOut={props.onSignOut}>Выйти</Logout>
-          </div> 
-        </Route>
-        
-        <Route path="/sign-up">
-          <div className="header__user">
-            <Link to="/sign-in" className="header__user-exit">Войти</Link>
-          </div> 
-        </Route>
-        
-        <Route path="/sign-in">
-          <div className="header__user">
-            <Link to="/sign-up" className="header__user-exit">Регистрация</Link>
-          </div> 
-        </Route>
-      </Switch>
+      
+      <div className="header__user">
+        <Switch>
+          <Route exact path="/">
+              <p className="header__user-email">{props.email}</p>
+              <Logout onSignOut={props.onSignOut}>Выйти</Logout>
+          </Route>
+          
+          <Route path="/sign-up">
+              <Link to="/sign-in" className="header__user-exit">Войти</Link>
+          </Route>
+          
+          <Route path="/sign-in">
+              <Link to="/sign-up" className="header__user-exit">Регистрация</Link>
+          </Route>
+        </Switch>
+      </div>
       
     </header>
   );
