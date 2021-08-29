@@ -154,7 +154,7 @@ function App() {
         })
         .catch((err) => {
             setIsInfoTooltipSuccess(false);
-            history.push('/sign-up')
+            // history.push('/sign-up')
             console.log(err)
         })
         .finally(() => {
