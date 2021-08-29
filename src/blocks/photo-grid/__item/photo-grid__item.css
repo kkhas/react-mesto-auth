@@ -1,0 +1,7 @@
+.photo-grid__item {
+    border-radius: 10px;
+    background: #FFFFFF;
+    display: grid;
+    grid-template-columns: 1fr 43px;
+    position: relative;
+}

@@ -1,0 +1,15 @@
+.profile {
+    padding: 42px 19px 36px;
+    text-align: center;
+}
+
+@media screen and (min-width: 1024px) {
+    .profile {
+        padding-top: 34px;
+        padding-bottom: 44px;
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        max-width: 880px;
+    }
+}

@@ -1,0 +1,27 @@
+.profile__add {
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 2px;
+    min-height: 50px;
+    display: flex;
+    background-color: unset;
+    justify-content: center;
+    align-items: center;
+    width: 282px;
+    margin: 0 auto;
+    background-image: url('../../../images/Profile-add-button.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+@media screen and (min-width: 1024px) {
+    .profile__add {
+        width: 150px;
+        margin-right: 0;
+    }
+}
+
+.profile__add:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}

@@ -1,0 +1,7 @@
+.popup__container_info {
+    display: grid;
+    grid-template-rows: 1fr 96px;
+    max-width: 430px;
+    height: 330px;
+    text-align: center;
+}

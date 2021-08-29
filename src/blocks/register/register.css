@@ -1,0 +1,8 @@
+.register {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    max-width: 880px;
+    min-height: 504px;
+    margin: auto;
+}

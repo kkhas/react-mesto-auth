@@ -1,0 +1,20 @@
+.photo-grid__like {
+    background-image: url('../../../images/Like.svg');
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 18px;
+    background-size: contain;
+    border-style: none;
+    background-color: unset;
+    margin-top: 23px;
+}
+
+.photo-grid__like:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.photo-grid__like:active {
+    background-image: url('../../../images/Like-active.svg');
+    opacity: 1;
+}

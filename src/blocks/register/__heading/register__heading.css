@@ -1,0 +1,15 @@
+.register__heading {
+    margin: 0;
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 22px;
+    padding: 60px 0 50px;
+}
+
+@media screen and (min-width: 1024px) {
+    .register__heading {
+        font-weight: 900;
+        font-size: 24px;
+        line-height: 29px;
+    }
+}

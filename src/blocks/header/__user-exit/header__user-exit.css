@@ -1,0 +1,12 @@
+.header__user-exit {
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    color: #A9A9A9;
+    text-decoration: none;
+    padding: 8px 0 0 25px;
+    background-color: unset;
+    border: none;
+    cursor: pointer;
+    display: flex;
+}
